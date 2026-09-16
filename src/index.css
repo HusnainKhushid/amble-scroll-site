@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Amble — a warm, unhurried type system.
+
+   The footage is cool blue, so the page is deliberately warm: sand
+   against sky, with a clay accent. Three faces, each with one job —
+   a soft serif to speak, a mono to label, a grotesque to explain.
+   ------------------------------------------------------------------ */
+@theme {
+  --font-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* The footage runs full bleed, so the page ground *is* the clip's
+     backdrop and every colour here has to hold against it. */
+  --color-ink: #152026;
+  /* 6.7:1 at the backdrop's darkest, 10.2:1 at its lightest. */
+  --color-cream: #f4efe6;
+  /* Deep bark. The sand build used a lighter clay, which only managed
+     2.7:1 once the ground turned blue — this clears AA at 4.56:1. */
+  --color-bark: #5a2f18;
+  /* Mid-backdrop, painted behind everything so first paint has no flash. */
+  --color-ground: #93b1bc;
+
+  /* Display runs to three short lines, so it is capped well below a
+     one-word wordmark's size and given real leading. */
+  --text-display: clamp(2.5rem, 4.6vw, 4.75rem);
+  --text-display--line-height: 1.06;
+  --text-display--letter-spacing: -0.022em;
+
+  --text-lede: clamp(0.9375rem, 1.02vw, 1.0625rem);
+  --text-lede--line-height: 1.68;
+  --text-lede--letter-spacing: -0.008em;
+
+  /* Mono, uppercase, wide. Every small label on the page uses this. */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.16em;
+
+  --text-btn: 0.8125rem;
+  --text-btn--line-height: 1;
+  --text-btn--letter-spacing: 0.01em;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Fraunces carries an optical-size axis; let the browser drive it so
+       the display line thins out as it grows. */
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-bark);
+    color: var(--color-cream);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-bark);
+    outline-offset: 3px;
+  }
+}
+
+@utility hairline {
+  height: 1px;
+  background-color: color-mix(in oklab, var(--color-ink) 18%, transparent);
+}
+
+/* The ticker at the foot of the page. Paused for anyone who has asked for
+   less motion, rather than hidden — the words still need to be readable. */
+@keyframes amble-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@utility marquee-track {
+  animation: amble-marquee 38s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ---- generated-section reveal ---- */
+.amble-reveal [data-r] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(0.16, 0.84, 0.24, 1),
+    transform 0.9s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+.amble-reveal.is-in [data-r] {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .amble-reveal [data-r] { opacity: 1; transform: none; transition: none; }
+}
